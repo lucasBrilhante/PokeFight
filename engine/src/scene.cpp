@@ -98,16 +98,16 @@ bool isColliding( GameObject* a, GameObject* b )
     int bottomA, bottomB;
 
     //Calculate the sides of rect A
-    leftA = a->x;
-    rightA = a->x + a->w;
-    topA = a->y;
-    bottomA = a->y + a->h;
+    leftA = a->position.getX();
+    rightA = a->position.getX() + a->w;
+    topA = a->position.getY();
+    bottomA = a->position.getY() + a->h;
 
     //Calculate the sides of rect B
-    leftB = b->x;
-    rightB = b->x + b->w;
-    topB = b->y;
-    bottomB = b->y + b->h;
+    leftB = b->position.getX();
+    rightB = b->position.getX() + b->w;
+    topB = b->position.getY();
+    bottomB = b->position.getY() + b->h;
     //If any of the sides from A are outside of B
     if( bottomA <= topB )
     {
@@ -130,15 +130,16 @@ bool isColliding( GameObject* a, GameObject* b )
 }
 bool Scene::verifyColision(GameObject* ob)
 {
+    bool result;
     for (auto id_obj: m_objects)
     {
         if(ob != id_obj.second){
-            bool result = isColliding(ob,id_obj.second);
+            result = isColliding(ob,id_obj.second);
             if(result){
                 printf("colliding with %s\n",id_obj.second->name().c_str());
             }
         }
     }
 
-    return true;
+    return result;
 }

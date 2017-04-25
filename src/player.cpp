@@ -3,6 +3,7 @@
 #include "components/text.hpp"
 #include "components/image.hpp"
 #include "log.h"
+#include "vector.hpp"
 
 using namespace engine;
 
@@ -25,11 +26,12 @@ bool Player::draw()
     return true;
 }
 
-bool Player::update(int xInc,int yInc,int xFInc,int yFSub)
+bool Player::update(Vector2D force,int xFInc,int yFSub)
 {
-    engine::GameObject::x = engine::GameObject::x+xInc;
-    engine::GameObject::y = engine::GameObject::y+yInc;
-    engine::GameObject::xF = engine::GameObject::xF+xFInc;
-    engine::GameObject::yF = yFSub;
+	//m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
+	//velocity.setX(1);
+	INFO("DESLOCAMENTO" << force.getX() << "   " << force.getY());
+    engine::GameObject::update(force,xFInc,yFSub);
     return true;
 }
+

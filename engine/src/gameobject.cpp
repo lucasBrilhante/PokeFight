@@ -71,10 +71,11 @@ bool GameObject::add_component(std::string name,Component & component)
     return true;
 }*/
 
-bool GameObject::update(int xInc,int yInc,int xFInc,int yFSub)
+bool GameObject::update(Vector2D v,int xFInc,int yFSub)
 {
-    x = x+xInc;
-    y = y+yInc;
+    velocity += aceleration;
+    position += velocity;
+    position += v;
     xF = xF+xFInc;
     yF = yFSub;
     return true;

@@ -1,23 +1,18 @@
-#ifndef __ENGINE_PLAYER_OBJECT__
-#define __ENGINE_PLAYER_OBJECT__
+#ifndef __GAME_PLAYER_OBJECT__
+#define __GAME_PLAYER_OBJECT__
 
 #include <string>
 #include <list>
 #include <typeindex>
 #include <typeinfo>
 #include <unordered_map>
-
+#include "vector.hpp"
 #include "gameobject.hpp"
 
 using namespace engine;
 
 class Player : public GameObject {
 public:
-    enum class State {
-            enabled,
-            disabled,
-            invalid
-        };
     Player() : GameObject() {}
     Player(std::string _name,int _x,int _y)
         : GameObject(_name,_x,_y) {}
@@ -25,11 +20,11 @@ public:
 
     ~Player() {}
 
-    bool init();
-    bool shutdown();
-    bool update(int xInc, int yInc,int xFInc,int yFSub);
-    bool draw();
-    
+    virtual bool init();
+    virtual bool shutdown();
+    virtual bool update(Vector2D force,int xFInc,int yFSub);
+    virtual bool draw();
+
 private:
     
 };

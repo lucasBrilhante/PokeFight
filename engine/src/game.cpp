@@ -127,6 +127,10 @@ void Game::handleEvents()
 void Game::run()
 {
     INFO("Game " << m_name << "Setup");
+    
+    const int FPS = 60;
+    const int DELAY_TIME = 1000.0f / FPS;
+    Uint32 frameStart, frameTime;
 
     m_state = State::init;
 
@@ -145,6 +149,7 @@ void Game::run()
         while(m_state != State::exit_loop)
         {
             if(handle_scene_changes() == false) break;
+            frameStart = SDL_GetTicks();
 
             SDL_Event evt;
             while(SDL_PollEvent(&evt) != 0)
@@ -159,7 +164,12 @@ void Game::run()
             m_scene->draw();
 
             SDL_RenderPresent(m_canvas);
-
+            frameTime = SDL_GetTicks() - frameStart;
+            
+            if(frameTime< DELAY_TIME)
+            {
+                SDL_Delay((int)(DELAY_TIME - frameTime));
+            }
             
         }
 

@@ -31,7 +31,7 @@ public:
     virtual bool shutdown();
     virtual bool draw();
     virtual bool update();
-    virtual bool verifyColision(GameObject* ob);
+    bool verifyColision(GameObject* ob);
 
     inline std::string name() const { return m_name; }
 
