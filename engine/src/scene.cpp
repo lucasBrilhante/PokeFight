@@ -82,32 +82,33 @@ bool Scene::draw()
         if (obj->state() == GameObject::State::enabled &&
             obj->draw() == false) return false;
     }
-
+    m_objects["Player1"]->draw();
+    m_objects["Player2"]->draw();
     return true;
 }
 bool Scene::update()
 {
     return true;
 }
-bool isColliding( GameObject* a, GameObject* b )
+bool Scene::isColliding( GameObject* a, GameObject* b )
 {
     //The sides of the rectangles
     int leftA, leftB;
     int rightA, rightB;
     int topA, topB;
     int bottomA, bottomB;
-
+    int fact = 30;
     //Calculate the sides of rect A
-    leftA = a->position.getX();
-    rightA = a->position.getX() + a->w;
-    topA = a->position.getY();
-    bottomA = a->position.getY() + a->h;
+    leftA = a->position.getX()+fact;
+    rightA = a->position.getX()+fact + a->w-fact;
+    topA = a->position.getY()+fact;
+    bottomA = a->position.getY()+fact + a->h-fact;
 
     //Calculate the sides of rect B
-    leftB = b->position.getX();
-    rightB = b->position.getX() + b->w;
-    topB = b->position.getY();
-    bottomB = b->position.getY() + b->h;
+    leftB = b->position.getX()+fact;
+    rightB = b->position.getX()+fact + b->w-fact;
+    topB = b->position.getY()+fact;
+    bottomB = b->position.getY()+fact + b->h-fact;
     //If any of the sides from A are outside of B
     if( bottomA <= topB )
     {

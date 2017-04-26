@@ -26,12 +26,15 @@ bool Player::draw()
     return true;
 }
 
-bool Player::update(Vector2D force,int xFInc,int yFSub)
+bool Player::update(Vector2D v,int xFInc,int yFSub)
 {
-	//m_currentFrame = int(((SDL_GetTicks() / 100) % 6));
-	//velocity.setX(1);
-	INFO("DESLOCAMENTO" << force.getX() << "   " << force.getY());
-    engine::GameObject::update(force,xFInc,yFSub);
+    //engine::GameObject::update(force,xFInc,yFSub);
+    velocity = v;
+    velocity += aceleration;
+    position += velocity;
+    xF = xF+xFInc;
+    yF = yFSub;
+
     return true;
 }
 

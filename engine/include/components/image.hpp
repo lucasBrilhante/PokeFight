@@ -17,12 +17,12 @@ public:
 
     ~ImageComponent() {}
 
-    bool init();
-    bool shutdown();
-    void draw();
+    virtual bool init();
+    virtual bool shutdown();
+    virtual void draw();
 
 
-private:
+protected:
     std::string m_path;
 
     SDL_Texture * m_texture;

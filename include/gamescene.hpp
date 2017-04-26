@@ -17,6 +17,9 @@ public:
 
     ~GameScene() {}
     bool update();
+private:
+    bool handlePlayer1();
+    bool handlePlayer2();
 /*
     virtual bool init();
     virtual bool shutdown();

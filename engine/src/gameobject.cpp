@@ -62,21 +62,8 @@ bool GameObject::add_component(Component & component)
 
     return true;
 }
-/*
-bool GameObject::add_component(std::string name,Component & component)
-{
-    INFO("Adding component to game object " << m_name);
-    m_components[std::type_index(typeid(component))].push_back(&component);
 
-    return true;
-}*/
-
-bool GameObject::update(Vector2D v,int xFInc,int yFSub)
+bool GameObject::update()
 {
-    velocity += aceleration;
-    position += velocity;
-    position += v;
-    xF = xF+xFInc;
-    yF = yFSub;
     return true;
 }

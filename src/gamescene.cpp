@@ -7,67 +7,111 @@
 
 using namespace engine;
 
+Player *player1;
+Player *player2;
 
-bool GameScene::update()
-{
-    
+bool GameScene::handlePlayer1(){
+    int i=0,j=0,x=0,y=0;
+    bool keyFlag = false;
     int mulpConst = -2;
-	auto player1 = (dynamic_cast<Player *>(m_objects["Player1"]));
-    bool col = verifyColision(player1);
+    bool colliding = isColliding(player1, player2);
     //const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
     if(Input::keyPressed(Input::UP))
     {
-        Vector2D vel(0,-3);
-        if(col) vel*=mulpConst;
-        player1->update(vel,1,3);
+        x = 0;
+        y = -3;
+        i = 1;
+        j = 3;
+        keyFlag = true;
     }
     if(Input::keyPressed(Input::DOWN))
     {
-        Vector2D vel(0,3);
-        if(col) vel*=mulpConst;
-        player1->update(vel,1,0);
+        x = 0;
+        y = 3;
+        i = 1;
+        j = 0;
+        keyFlag = true;
     }
     if(Input::keyPressed(Input::RIGHT))
     {
-        Vector2D vel(3,0);
-        if(col) vel*=mulpConst;
-        player1->update(vel,1,2);
+        x = 3;
+        y = 0;
+        i = 1;
+        j = 2;
+        keyFlag = true;
     }
     if(Input::keyPressed(Input::LEFT))
     {
-        Vector2D vel(-3,0);
-        if(col) vel*=mulpConst;
-        player1->update(vel,1,1);
+        x = -3;
+        y = 0;
+        i = 1;
+        j = 1;
+        keyFlag = true;
     }
+    if(keyFlag){
+        Vector2D pos(x,y);
+        if(colliding) pos*=mulpConst;
+        player1->update(pos,i,j);
+    }
+    return true;
+}
+bool GameScene::handlePlayer2(){
+    int i,j,x=0,y=0;
+    bool keyFlag = false;
+    int mulpConst = -2;
 
-    
-    auto player2 = (dynamic_cast<Player *>(m_objects["Player2"]));
-    bool col2 = verifyColision(player2);
+    bool colliding = isColliding(player2,player1);
     //const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );
     if(Input::keyPressed(Input::W))
     {
-        Vector2D vel(0,-3);
-        if(col2) vel*=mulpConst;
-        player2->update(vel,1,3);
+        x = 0;
+        y = -3;
+        i = 1;
+        j = 3;
+        keyFlag = true;
     }
     if(Input::keyPressed(Input::S))
     {
-        Vector2D vel(0,3);
-        if(col2) vel*=mulpConst;
-        player2->update(vel,1,0);
+        x = 0;
+        y = 3;
+        i = 1;
+        j = 0;
+        keyFlag = true;
     }
     if(Input::keyPressed(Input::D))
     {
-        Vector2D vel(3,0);
-        if(col2) vel*=mulpConst;
-        player2->update(vel,1,2);
+        x = 3;
+        y = 0;
+        i = 1;
+        j = 2;
+        keyFlag = true;
     }
     if(Input::keyPressed(Input::A))
     {
-        Vector2D vel(-3,0);
-        if(col2) vel*=mulpConst;
-        player2->update(vel,1,1);
+        x = -3;
+        y = 0;
+        i = 1;
+        j = 1;
+        keyFlag = true;
     }
+    if(keyFlag){
+        Vector2D pos(x,y);
+        if(colliding) pos*=mulpConst;
+        player2->update(pos,i,j);
+    }
+    return true;
+}
+
+
+bool GameScene::update()
+{
+    player1 = (dynamic_cast<Player *>(m_objects["Player1"]));
+
+    player2 = (dynamic_cast<Player *>(m_objects["Player2"]));
+
+    handlePlayer1();
+    
+    handlePlayer2();
 
     return true;
 }

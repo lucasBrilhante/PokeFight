@@ -7,7 +7,7 @@
 namespace globals {
 
     const std::string game_name = "pokefight";
-    const std::pair<int, int> window_size(600, 600);
+    const std::pair<int, int> window_size(512, 474);
 
 }
 

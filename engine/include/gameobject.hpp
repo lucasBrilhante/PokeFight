@@ -29,7 +29,7 @@ public:
 
     virtual bool init();
     virtual bool shutdown();
-    virtual bool update(Vector2D v,int xFInc,int yFSub);
+    virtual bool update();
     virtual bool draw();
 
 
@@ -44,7 +44,7 @@ public:
     Vector2D position;
     Vector2D velocity;
     Vector2D aceleration;
-
+    
     bool m_passable;
     
     int    w, h;
@@ -55,6 +55,7 @@ protected:
     std::string m_name;
     State       m_state;
     std::unordered_map<std::type_index, std::list<Component *> > m_components;
+    
 };
 
 }
