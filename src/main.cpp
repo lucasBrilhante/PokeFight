@@ -6,6 +6,7 @@
 #include "components/audio.hpp"
 #include "player.hpp"
 #include "gamescene.hpp"
+#include "menuscene.hpp"
 #include "pikachu.hpp"
 #include "bulbasaur.hpp"
 
@@ -21,25 +22,28 @@ int main(int, char**)
 
     // Setup scenes
     GameScene gameplay("Gameplay");
-    Game::instance.add_scene(gameplay);
+    MenuScene menu("Menu");
+    /* Menu*/
+    Game::instance.add_scene(menu);
     
-    //addGenericTile(gameplay ,0,0,0,0,"field1");
+    GameObject playbutton("playbutton",200,200);
+    ImageComponent playImage(playbutton,"assets/sprites/playbutton.png",1,1);
+    playbutton.add_component(playImage);
+    menu.add_game_object(playbutton);
 
-    //GameObject stone("pedra",300,300);
-    //ImageComponent stoneImage(stone, "assets/sprites/tilesheet2.png",16,16);
+
+    /* Gamescene*/
+    Game::instance.add_scene(gameplay);
+
     Pikachu pikachu("Player1",100,100);
     pikachu.xF = 0; pikachu.yF = 0;
     ImageComponent pikachuImage(pikachu, "assets/sprites/pikasheet.png",4,4);
     Bulbasaur bulbasaur("Player2",300,300);
     bulbasaur.xF = 0; bulbasaur.yF = 0;
     ImageComponent bulbasaurImage(bulbasaur, "assets/sprites/bulbasheet.png",4,4);
-
     
     pikachu.add_component(pikachuImage);
     bulbasaur.add_component(bulbasaurImage);
-    //pikachu.add_component(pikachuAudio);
-
-    //pikachu.add_component(text);
 
     gameplay.add_game_object(pikachu);
     gameplay.add_game_object(bulbasaur);

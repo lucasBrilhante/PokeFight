@@ -82,8 +82,7 @@ bool Scene::draw()
         if (obj->state() == GameObject::State::enabled &&
             obj->draw() == false) return false;
     }
-    m_objects["Player1"]->draw();
-    m_objects["Player2"]->draw();
+
     return true;
 }
 bool Scene::update()

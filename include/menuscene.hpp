@@ -1,5 +1,5 @@
-#ifndef __GAME_SCENE__
-#define __GAME_SCENE__
+#ifndef __MENU_SCENE__
+#define __MENU_SCENE__
 
 #include <string>
 #include <unordered_map>
@@ -8,20 +8,17 @@
 
 using namespace engine;
 
-class GameScene : public Scene{
+class MenuScene : public Scene{
 public:
 
-    GameScene() : Scene("") {}
-    GameScene(std::string _name)
+    MenuScene() : Scene("") {}
+    MenuScene(std::string _name)
         : Scene(_name) {}
 
-    ~GameScene() {}
-    bool draw();
+    ~MenuScene() {}
     bool update();
-
 private:
-    bool handlePlayer1();
-    bool handlePlayer2();
+
 /*
     virtual bool init();
     virtual bool shutdown();

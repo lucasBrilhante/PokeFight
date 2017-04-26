@@ -115,3 +115,12 @@ bool GameScene::update()
 
     return true;
 }
+
+bool GameScene::draw()
+{
+    Scene::draw();
+    m_objects["Player1"]->draw();
+    m_objects["Player2"]->draw();
+
+    return true;
+}
