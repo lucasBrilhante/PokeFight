@@ -31,8 +31,6 @@ public:
     virtual bool shutdown();
     virtual bool draw();
     virtual bool update();
-    bool verifyColision(GameObject* ob);
-    bool isColliding( GameObject* a, GameObject* b);
 
     inline std::string name() const { return m_name; }
 

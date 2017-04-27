@@ -87,59 +87,11 @@ bool Scene::draw()
 }
 bool Scene::update()
 {
-    return true;
-}
-bool Scene::isColliding( GameObject* a, GameObject* b )
-{
-    //The sides of the rectangles
-    int leftA, leftB;
-    int rightA, rightB;
-    int topA, topB;
-    int bottomA, bottomB;
-    int fact = 30;
-    //Calculate the sides of rect A
-    leftA = a->position.getX()+fact;
-    rightA = a->position.getX()+fact + a->w-fact;
-    topA = a->position.getY()+fact;
-    bottomA = a->position.getY()+fact + a->h-fact;
-
-    //Calculate the sides of rect B
-    leftB = b->position.getX()+fact;
-    rightB = b->position.getX()+fact + b->w-fact;
-    topB = b->position.getY()+fact;
-    bottomB = b->position.getY()+fact + b->h-fact;
-    //If any of the sides from A are outside of B
-    if( bottomA <= topB )
-    {
-        return false;
-    }
-    if( topA >= bottomB )
-    {
-        return false;
-    }
-    if( rightA <= leftB )
-    {
-        return false;
-    }
-    if( leftA >= rightB )
-    {
-        return false;
-    }
-    //If none of the sides from A are outside B
-    return true;
-}
-bool Scene::verifyColision(GameObject* ob)
-{
-    bool result;
     for (auto id_obj: m_objects)
     {
-        if(ob != id_obj.second){
-            result = isColliding(ob,id_obj.second);
-            if(result){
-                printf("colliding with %s\n",id_obj.second->name().c_str());
-            }
-        }
+        auto obj = id_obj.second;
+        if (obj->state() == GameObject::State::enabled &&
+            obj->update() == false) return false;
     }
-
-    return result;
+    return true;
 }

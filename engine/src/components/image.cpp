@@ -50,19 +50,20 @@ bool ImageComponent::shutdown()
 
 void ImageComponent::draw()
 {
+
     SDL_Rect renderQuad = {
-        (int) m_game_object->position.getX(),
-        (int) m_game_object->position.getY(),
+        (int) m_game_object->physics.position.getX(),
+        (int) m_game_object->physics.position.getY(),
         m_game_object->w,
         m_game_object->h
     };
     SDL_Rect frameQuad = {
-        ((m_game_object->xF)%i)*m_game_object->w,
-        m_game_object->yF*m_game_object->h,
+        m_game_object->xF,
+        m_game_object->yF,
         m_game_object->w,
         m_game_object->h
     };
-    INFO("draw "<< (m_game_object->xF)%i << "  "<< m_game_object->yF);
+    //INFO("draw "<< (m_game_object->xF)%i << "  "<< m_game_object->yF);
     //SDL_RenderCopy(Game::instance.canvas(), m_texture, &frameQuad, &renderQuad);
     SDL_RenderCopyEx(Game::instance.canvas(), m_texture, &frameQuad, &renderQuad, 0, 0, SDL_FLIP_NONE);
 }

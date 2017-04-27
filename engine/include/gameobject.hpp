@@ -9,6 +9,8 @@
 
 #include "vector.hpp"
 #include "components/component.hpp"
+#include "physics.hpp"
+
 
 namespace engine {
 
@@ -20,9 +22,9 @@ public:
         invalid
     };
 
-    GameObject() : GameObject("",0,0,true, State::invalid) {}
-    GameObject(std::string _name,int _x,int _y,bool _passable = false, State _state=State::enabled)
-        : w(0), h(0), rotation(0), m_name(_name), m_passable(_passable), position(_x,_y), velocity(0,0), aceleration(0,0),
+    GameObject() : GameObject("",0,0, State::invalid) {}
+    GameObject(std::string _name,int _x,int _y, State _state=State::enabled)
+        : w(0), h(0), rotation(0), m_name(_name), physics(*this,_x,_y),
           m_state(_state) {}
 
     ~GameObject() {}
@@ -37,16 +39,12 @@ public:
 
     inline std::string name()  const { return m_name; }
     inline State       state() const { return m_state; }
-    inline bool       passable() const { return m_passable; }
 
 
     inline void set_size(int _w, int _h) { w = _w; h = _h; }
-    Vector2D position;
-    Vector2D velocity;
-    Vector2D aceleration;
     
-    bool m_passable;
-    
+    PhysicsComponent physics;
+
     int    w, h;
     int    xF,yF;
     double rotation;

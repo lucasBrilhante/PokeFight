@@ -31,9 +31,9 @@ bool Pikachu::draw()
     return true;
 }
 
-bool Pikachu::update(Vector2D v,int xFInc,int yFSub)
+bool Pikachu::update()
 {
-    Player::update(v,xFInc,yFSub);
+    Player::update();
 
     return true;
 }

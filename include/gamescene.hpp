@@ -18,6 +18,7 @@ public:
     ~GameScene() {}
     bool draw();
     bool update();
+    bool init();
 
 private:
     bool handlePlayer1();

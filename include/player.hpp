@@ -22,9 +22,13 @@ public:
 
     virtual bool init();
     virtual bool shutdown();
-    virtual bool update(Vector2D force,int xFInc,int yFSub);
+    virtual bool update();
     virtual bool draw();
 
+    bool moveDown();
+    bool moveUp();
+    bool moveRight();
+    bool moveLeft();
 private:
     
 };

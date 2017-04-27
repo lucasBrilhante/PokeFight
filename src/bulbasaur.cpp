@@ -29,9 +29,9 @@ bool Bulbasaur::draw()
     return true;
 }
 
-bool Bulbasaur::update(Vector2D v,int xFInc,int yFSub)
+bool Bulbasaur::update()
 {
-    Player::update(v,xFInc,yFSub);
+    Player::update();
 
     return true;
 }

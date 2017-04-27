@@ -24,7 +24,7 @@ public:
 
     bool init();
     bool shutdown();
-    bool update(Vector2D v,int xFInc,int yFSub);
+    bool update();
     bool draw();
     
 private:
