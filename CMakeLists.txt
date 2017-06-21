@@ -45,9 +45,9 @@ include_directories(${ENGINE_INCLUDE_DIR})
 
 #### Executable ####
 
-add_executable(cancoes ${SOURCES})
+add_executable(pokefight ${SOURCES})
 
-target_link_libraries(cancoes
+target_link_libraries(pokefight
                       engine
                       SDL2 SDL2_image SDL2_ttf SDL2_mixer)
 
@@ -56,6 +56,6 @@ target_link_libraries(cancoes
 #### Custom Commands ####
 
 # Copy assets folder to build
-add_custom_command(TARGET cancoes POST_BUILD
+add_custom_command(TARGET pokefight POST_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_directory
                    ${PROJECT_ASSETS_DIR} ${CMAKE_BINARY_DIR}/assets)

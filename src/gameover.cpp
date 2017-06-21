@@ -9,9 +9,9 @@ using namespace engine;
 bool GameOverScene::init(){
 	Scene::init();
 	
-	int posX = 50;
-	int winnerPosY = 100;
-	int loserPosY = 300;
+	int posX = 100;
+	int winnerPosY = 175;
+	int loserPosY = 370;
 
 	if(Game::instance.p1Winner){
 		auto image = p1->get_component<CustomImageComponent>();
@@ -53,6 +53,8 @@ bool GameOverScene::update()
 }
 bool GameOverScene::draw(){
 	Scene::draw();
+	p1->draw();
+	p2->draw();
 	return true;
 }
 

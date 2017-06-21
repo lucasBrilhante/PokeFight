@@ -7,6 +7,7 @@
 #include "keyword.hpp"
 #include "gameglobals.hpp"
 #include <sstream>
+#include <string>
 #include "game.hpp"
 
 
@@ -71,6 +72,10 @@ bool Player::update()
     }
     if(physics.position.getX() < 0 || physics.position.getY() < 10 ||
     physics.position.getY() > 515 || physics.position.getX() > 570){
+        if(m_name == "Player1")
+            Game::instance.p1Winner = false;
+        else
+            Game::instance.p1Winner = true;
         Game::instance.change_scene("Gameover");
     }
     return true;
@@ -145,7 +150,13 @@ void Player::getHit(int timeSpell,PhysicsComponent::Direction direction){
     timeDisabled = timeSpell;
     canMove = false;
     shakeDir = direction;
+
+    std::stringstream ss;
+    ss << "Vida: "<<(multiplier-1)*100 << "%";
     
+    INFO((ss.str()));
+
+    //lifeText->m_text = ss.str();
     //sprite
     if(direction == PhysicsComponent::Direction::up){
         xF = 0*w;

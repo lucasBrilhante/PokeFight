@@ -40,6 +40,13 @@ int main(int, char**)
     Game::instance.add_scene(menu);
     Game::instance.add_scene(room1);
     Game::instance.add_scene(GameoverScene);
+
+
+    GameObject playbutton("playbutton",(globals::window_size.first/2)-50,(globals::window_size.second/2)-50);
+    ImageComponent playImage(playbutton,"playbutton.png",1,1);
+    playbutton.xF = 0; playbutton.yF = 0;
+    playbutton.add_component(playImage);
+    menu.add_game_object(playbutton);
     //Game::instance.add_scene(VictoryScene);
     /*-------------------------GameOver-----------------------------*/
     GameObject background("backgroundEnd",0,0);
@@ -57,9 +64,11 @@ int main(int, char**)
     CustomImageComponent bulbafaceImage(bulbaface,"faces.png",13,16);
     bulbaface.add_component(bulbafaceImage);
 
-    GameoverScene.add_game_object(background);
+
+
     GameoverScene.add_game_object(pikaface);
     GameoverScene.add_game_object(bulbaface);
+    GameoverScene.add_game_object(background);
 
     GameoverScene.p1 = &pikaface;
     GameoverScene.p2 = &bulbaface;
@@ -87,12 +96,19 @@ int main(int, char**)
 
     //Spells
     Tackle p1Spell2("p1Spell2",&player,0,0,1000,200);
-    //p1Spell1.xF = 0; p1Spell1.yF = 0; 
     player.spell2 = &p1Spell2;
-    //AnimationComponent explosion(p1Spell1, "thunder.png", 6, 6,1000,0,31);
-    //p1Spell1.add_component(explosion);
+
     room1.add_game_object(player);
     room1.add_game_object(p1Spell2);
+
+    GameObject lifePika("lifePika",5,40);
+    TextComponent pikaText(lifePika,"0%","font.ttf",20);
+    lifePika.add_component(pikaText);
+    player.lifeText = &pikaText;
+
+    room1.add_game_object(lifePika);
+
+
 
     /*-------------------------player 2-----------------------------*/
     Player player2(globals::player2,500,400);
@@ -114,15 +130,35 @@ int main(int, char**)
     AnimationComponent seed(p2Spell1, "seed.png", 16, 16,1000,9,9);
     p2Spell1.add_component(seed);
 
-
     Tackle p2Spell2("p2Spell2",&player2,0,0,1000,200);
     player2.spell2 = &p2Spell2;
-    
+
     room1.add_game_object(player2);
     room1.add_game_object(p2Spell2);    
     room1.add_game_object(p2Spell1);
 
+    GameObject lifeBulba("lifeBulba",605,40);
+    TextComponent bulbaText(lifeBulba,"0%","font.ttf",20);
+    lifeBulba.add_component(bulbaText);
+    player.lifeText = &bulbaText;
+    
+    room1.add_game_object(lifeBulba);
 
+
+    /*--------------------------------------------------*/
+    GameObject pikafaceHud("pikafaceHud",0,0);
+    pikafaceHud.xF = 0; pikafaceHud.yF = 40*3;
+    ImageComponent pikafaceHudImage(pikafaceHud,"faces.png",13,16);
+    pikafaceHud.add_component(pikafaceHudImage);
+
+    GameObject bulbafaceHud("bulbafaceHud",600,0);
+    bulbafaceHud.xF = 0; bulbafaceHud.yF = 0;
+    ImageComponent bulbafaceHudImage(bulbafaceHud,"faces.png",13,16);
+    bulbafaceHud.add_component(bulbafaceHudImage);
+
+
+    room1.add_game_object(pikafaceHud);
+    room1.add_game_object(bulbafaceHud);
     // Other stuff
     player.setEnemyPlayer(&player2);
     player2.setEnemyPlayer(&player);

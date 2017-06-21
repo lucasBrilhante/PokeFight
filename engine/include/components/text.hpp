@@ -37,9 +37,9 @@ public:
     
     inline void enable_high_quality()  { m_high_quality = true; }
     inline void disable_high_quality() { m_high_quality = false; }
+    std::string m_text;
 
 private:
-    std::string m_text;
     std::string m_font_path;
     int         m_font_size;
     bool        m_high_quality;

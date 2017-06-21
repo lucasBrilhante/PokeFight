@@ -38,12 +38,13 @@ public:
     bool moveRight();
     bool moveLeft();
     void getHit(int time, PhysicsComponent::Direction direction);
-
+    //void setTextcp(TextComponent tc){lifeText = &tc}
     Timer disableTimer;
     Player * enemy;
     Spell * spell1;
     Spell * spell2;
     Spell * spell3;
+    TextComponent* lifeText;
     /*bool changeInstrument(std::string instrument);
     bool changeSprite(std::string sprite);
     
@@ -51,7 +52,7 @@ public:
     void addSprite(std::string instrument_name, ImageComponent* sprite);
     Instrument getActiveInstrument();
     void addFragment(int _id);
-    TextComponent* nFragments;
+    
     void clearFragments();*/
     
 private:

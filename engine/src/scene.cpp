@@ -16,6 +16,8 @@ bool Scene::comparator(const std::pair<std::string, GameObject *>  &p1,
         return true;
     }else if (p2.second->name() == "mapa"){
         return false;
+    }else if (p2.second->name() == "backgroundEnd"){
+        return false;
     }
     else{
         return (p1.second->physics.position.getY() + p1.second->h) <
