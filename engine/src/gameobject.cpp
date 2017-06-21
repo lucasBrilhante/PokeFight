@@ -2,6 +2,12 @@
 
 #include "components/text.hpp"
 #include "components/image.hpp"
+#include "components/animation.hpp"
+#include "components/code.hpp"
+#include "components/animationcontroller.hpp"
+#include "customimagecomponent.hpp"
+#include "gameglobals.hpp"
+
 #include "log.h"
 
 using namespace engine;
@@ -42,8 +48,16 @@ bool GameObject::draw()
 {
     for(auto component: m_components[std::type_index(typeid(ImageComponent))])
     {
-        if(component->state() == Component::State::enabled)
+        if(component->state() == Component::State::enabled){
             (dynamic_cast<ImageComponent *>(component))->draw();
+        }
+    }
+
+    for(auto component: m_components[std::type_index(typeid(CustomImageComponent))])
+    {
+        if(component->state() == Component::State::enabled){
+            (dynamic_cast<CustomImageComponent *>(component))->draw();
+        }
     }
 
     for(auto component: m_components[std::type_index(typeid(TextComponent))])
@@ -52,18 +66,65 @@ bool GameObject::draw()
             (dynamic_cast<TextComponent *>(component))->draw();
     }
 
+    for(auto component: m_components[std::type_index(typeid(AnimationControllerComponent))])
+    {
+        if(component->state() == Component::State::enabled)
+            (dynamic_cast<AnimationControllerComponent *>(component))->draw();
+    }
+
+    for(auto component: m_components[std::type_index(typeid(AnimationComponent))])
+    {
+        if(component->state() == Component::State::enabled)
+            (dynamic_cast<AnimationComponent *>(component))->draw();
+    }
+    
     return true;
 }
+void GameObject::setup()
+{
+    for(auto component: m_components[std::type_index(typeid(AnimationControllerComponent))])
+    {
+        if(component->state() == Component::State::enabled)
+            (dynamic_cast<AnimationControllerComponent *>(component))->setup();
+    }
+    for(auto component: m_components[std::type_index(typeid(AnimationComponent))])
+    {
+        if(component->state() == Component::State::enabled)
+            (dynamic_cast<AnimationComponent *>(component))->setup();
+    }
 
+}
 bool GameObject::add_component(Component & component)
 {
     INFO("Adding component to game object " << m_name);
     m_components[std::type_index(typeid(component))].push_back(&component);
+
+    INFO("Game object " << m_name << " added");
 
     return true;
 }
 
 bool GameObject::update()
 {
+    physics.velocity += physics.aceleration;
+    physics.position += physics.velocity;
+
+    for(auto componentList: m_components)//fazer para todos os components
+    {
+        for(auto component : componentList.second)
+        {
+            if(component->state() == Component::State::enabled)
+                component->update();
+        }
+    }
+
     return true;
+}
+
+int GameObject::getInitialX(){
+    return xI;
+}
+
+int GameObject::getInitialY(){
+    return yI;
 }

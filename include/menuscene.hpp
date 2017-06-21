@@ -2,8 +2,6 @@
 #define __MENU_SCENE__
 
 #include <string>
-#include <unordered_map>
-
 #include "scene.hpp"
 
 using namespace engine;

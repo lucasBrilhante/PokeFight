@@ -3,7 +3,6 @@
 
 #include <math.h>
 
-
 namespace engine {
 
 class Vector2D
@@ -67,9 +66,10 @@ class Vector2D
 				(*this) *= 1 / l;
 			}
 		}
-	private:
 		float m_x;
 		float m_y;
+	private:
+		
 };
 }
 #endif

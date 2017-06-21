@@ -5,7 +5,7 @@
 using namespace engine;
 
 Vector2D null(0,0);
-bool PhysicsComponent::detectColision( GameObject* obj)
+bool PhysicsComponent::detectCollision( GameObject* obj)
 {
     //The sides of the rectangles
     int leftA, leftB;
@@ -18,38 +18,33 @@ bool PhysicsComponent::detectColision( GameObject* obj)
     rightA = collisionBox.x + collisionBox.w;
     topA = collisionBox.y;
     bottomA = collisionBox.y + collisionBox.h;
-
     //Calculate the sides of rect B
     leftB = obj->physics.collisionBox.x;
-    rightB = obj->physics.collisionBox.x + collisionBox.w;
+    rightB = obj->physics.collisionBox.x + obj->physics.collisionBox.w;
     topB = obj->physics.collisionBox.y;
-    bottomB = obj->physics.collisionBox.y + collisionBox.h;
+    bottomB = obj->physics.collisionBox.y + obj->physics.collisionBox.h;
+    //If any of the sides from A are outside of B
     //If any of the sides from A are outside of B
     if( bottomA <= topB )
     {
-        INFO("COLISAO  DOWN\n");
-        collisionObj = null;
         return false;
     }
+
     if( topA >= bottomB )
     {
-        INFO("COLISAO  UP\n");
-        collisionObj = null;
         return false;
     }
+
     if( rightA <= leftB )
     {
-        INFO("COLISAO  RIGHT\n");
-        collisionObj = null;
         return false;
     }
+
     if( leftA >= rightB )
     {
-        INFO("COLISAO  LEFT\n");
-        collisionObj = null;
         return false;
     }
-    collisionObj = velocity;
+
     //If none of the sides from A are outside B
     return true;
 }

@@ -7,9 +7,9 @@ using namespace engine;
 
 Game Game::instance;
 
-void Game::set_properties(std::string name, std::pair<int, int> window_size)
+void Game::set_properties(std::string new_name, std::pair<int, int> window_size)
 {
-    m_name = name;
+    m_name = new_name;
     m_window_size = window_size;
 }
 
@@ -128,7 +128,7 @@ void Game::run()
 {
     INFO("Game " << m_name << "Setup");
     
-    const int FPS = 45;
+    const int FPS = 30;
     const int DELAY_TIME = 1000.0f / FPS;
     Uint32 frameStart, frameTime;
 
@@ -139,7 +139,7 @@ void Game::run()
         INFO("Start game loop");
         m_state = State::main_loop;
 
-        if (m_scene == NULL)
+        if (m_scene_intent.empty())
         {
             WARN("No scenes to run!");
             m_state = State::exit_loop;
@@ -147,22 +147,19 @@ void Game::run()
         else m_state = State::main_loop_change_scene;
 
         while(m_state != State::exit_loop)
-        {
+        {   
             if(handle_scene_changes() == false) break;
             frameStart = SDL_GetTicks();
-
+            
             SDL_Event evt;
             while(SDL_PollEvent(&evt) != 0)
             {
                 if (evt.type == SDL_QUIT) m_state = State::exit_loop;
             }
             
-            handleEvents();
-            
             SDL_RenderClear(m_canvas);
-
             m_scene->draw();
-
+            handleEvents();
             SDL_RenderPresent(m_canvas);
             frameTime = SDL_GetTicks() - frameStart;
             
@@ -211,8 +208,9 @@ bool Game::add_scene(Scene & scene)
 
     m_scenes[id] = &scene;
 
-    if (m_scene == NULL) change_scene(id);
-
+    if (m_scene_intent.empty()) {
+        change_scene(id);
+    }
     return true;
 }
 
@@ -225,9 +223,7 @@ bool Game::change_scene(const std::string & id)
         WARN("Scene " << id << " not found!");
         return false;
     }
-
-    m_last_scene = m_scene;
-    m_scene = m_scenes[id];
+    m_scene_intent = id;
     m_state = State::main_loop_change_scene;
     return true;
 }
@@ -236,18 +232,23 @@ bool Game::handle_scene_changes()
 {
     if (m_state == State::main_loop_change_scene)
     {
-        if (m_scene == NULL)
+        if (m_scene_intent.empty())
         {
             WARN("No scenes to run!");
             return false;
         }
         else
         {
+            m_last_scene = m_scene;
+            m_scene = m_scenes[m_scene_intent];
+
             INFO("Scenes changing from " <<
                  (m_last_scene ? m_last_scene->name() : "NULL") << " to " <<
                  m_scene->name() << "...");
-
-            if(m_last_scene) m_last_scene->shutdown();
+            if(m_last_scene) {
+                m_last_scene->shutdown();
+                m_last_scene->asset_manager().shutdown();
+            }
             m_scene->init();
 
             m_state = State::main_loop;

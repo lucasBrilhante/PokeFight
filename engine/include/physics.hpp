@@ -13,12 +13,12 @@ namespace engine {
 
 class PhysicsComponent {
 public:
-	 class collision {
-        public:
-        bool left;
-        bool right;
-        bool up;
-        bool down;
+	 enum class Direction {
+        left,
+        right,
+        up,
+        down,
+        none
     };
 
     PhysicsComponent(GameObject & _game_object, int _x, int _y)
@@ -27,17 +27,17 @@ public:
 
     ~PhysicsComponent() {}
 
-    bool detectColision(GameObject* obj);
+    bool detectCollision(GameObject* obj);
     
+    Direction direction;
     GameObject * game_object;
-    std::vector<collision> collisions;
     SDL_Rect collisionBox;
     bool block;
-
-    Vector2D collisionObj;
-    Vector2D position;    
+    Vector2D position;
     Vector2D velocity;
     Vector2D aceleration;
+    Vector2D collisionObj;
+       
 };
 
 }

@@ -19,10 +19,7 @@ public:
     bool draw();
     bool update();
     bool init();
-
 private:
-    bool handlePlayer1();
-    bool handlePlayer2();
 /*
     virtual bool init();
     virtual bool shutdown();

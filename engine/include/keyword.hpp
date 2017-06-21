@@ -33,10 +33,15 @@ class Input{
             X = SDL_SCANCODE_X,
             Y = SDL_SCANCODE_Y,
             Z = SDL_SCANCODE_Z,
+            ENTER = SDL_SCANCODE_RETURN,
+            ESC = SDL_SCANCODE_ESCAPE,
             UP = SDL_SCANCODE_UP,
             DOWN = SDL_SCANCODE_DOWN,
             LEFT = SDL_SCANCODE_LEFT,
             RIGHT = SDL_SCANCODE_RIGHT,
+            ONE = SDL_SCANCODE_1,
+            TWO = SDL_SCANCODE_2,
+            THREE = SDL_SCANCODE_3
         };
         static bool keyPressed(int key){
             const Uint8* currentKeyStates = SDL_GetKeyboardState( NULL );

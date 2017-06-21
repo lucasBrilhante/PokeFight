@@ -21,11 +21,14 @@ public:
 
     virtual bool init() { return true; }
     virtual bool shutdown() { return true; }
-
+    virtual bool setup(){ return true;}
+    virtual bool update(){ return true;}
     inline State state() { return m_state; }
+    void       setState(State new_state)  { m_state = new_state; }
+        GameObject * m_game_object;
+
 
 protected:
-    GameObject * m_game_object;
     State        m_state;
 };
 

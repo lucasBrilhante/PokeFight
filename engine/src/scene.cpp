@@ -1,10 +1,34 @@
 #include "scene.hpp"
 #include "log.h"
 #include <string>
+#include <vector>
+#include <utility>
 #include "sdl2include.h"
+
 using namespace engine;
 
 GameObject INVALID_GAME_OBJECT;
+
+bool Scene::comparator(const std::pair<std::string, GameObject *>  &p1, 
+    const std::pair<std::string, GameObject *> &p2) 
+{
+    if(p1.second->name() == "mapa"){
+        return true;
+    }else if (p2.second->name() == "mapa"){
+        return false;
+    }
+    else{
+        return (p1.second->physics.position.getY() + p1.second->h) <
+           (p2.second->physics.position.getY() + p2.second->h);
+   }
+}
+
+std::vector<std::pair<std::string, GameObject *>> Scene::sortGameObjects(){
+    std::vector<std::pair<std::string, GameObject *>> mapAsVector;
+    copy(m_objects.begin(), m_objects.end(), back_inserter(mapAsVector));
+    sort(mapAsVector.begin(), mapAsVector.end(), comparator);
+    return mapAsVector;
+}
 
 bool Scene::add_game_object(GameObject & obj)
 {
@@ -21,15 +45,15 @@ bool Scene::add_game_object(GameObject & obj)
     return true;
 }
 
-GameObject & Scene::get_game_object(const std::string & id)
+GameObject * Scene::get_game_object(const std::string & id)
 {
-    if (m_objects.find(id) == m_objects.end())
+    /*if (m_objects.find(id) == m_objects.end())
     {
         WARN("Could not find game object " << id);
         return INVALID_GAME_OBJECT;
-    }
+    }*/
 
-    return *m_objects[id];
+    return m_objects[id];
 }
 
 bool Scene::remove_game_object(const std::string & id)
@@ -53,8 +77,8 @@ bool Scene::init()
     for (auto id_obj: m_objects)
     {
         auto obj = id_obj.second;
-        if (obj->state() == GameObject::State::enabled &&
-            obj->init() == false) return false;
+        obj->resetState();
+        if (obj->init() == false) return false;
     }
 
     return true;
@@ -67,8 +91,7 @@ bool Scene::shutdown()
     for (auto id_obj: m_objects)
     {
         auto obj = id_obj.second;
-        if (obj->state() == GameObject::State::enabled &&
-            obj->shutdown() == false) return false;
+        if (obj->shutdown() == false) return false;
     }
 
     return true;
@@ -76,7 +99,9 @@ bool Scene::shutdown()
 
 bool Scene::draw()
 {
-    for (auto id_obj: m_objects)
+    std::vector<std::pair<std::string, GameObject *>> objectsVector = sortGameObjects();
+
+    for (auto id_obj: objectsVector)
     {
         auto obj = id_obj.second;
         if (obj->state() == GameObject::State::enabled &&
@@ -93,5 +118,6 @@ bool Scene::update()
         if (obj->state() == GameObject::State::enabled &&
             obj->update() == false) return false;
     }
+    
     return true;
 }
